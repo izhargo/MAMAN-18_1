@@ -9,6 +9,7 @@ package datastruc.cs.openu.ac.il;
 public class LinkedList {
 
 	private Cell start;
+	private Cell end;
 	private int size;
 
 	/**
@@ -17,6 +18,7 @@ public class LinkedList {
 	public LinkedList() {
 		size = 0;
 		start = null;
+		end = null;
 	}
 
 	/**
@@ -26,20 +28,23 @@ public class LinkedList {
 		return start == null;
 	}
 
+	
 	/**
-	 * method inserts cell to the linked list at the start of the list
+	 * method inserts cell to the linked list at the end of the list
 	 * 
-	 * @param cell
+	 * @param val
 	 */
-	public void listInsert(int val) {
+	public void InsertAtEnd(int val) {
 		Cell x = new Cell(val);
-		x.setNext(start);
-		if (!isEmpty()) {
-			start.setPrev(x);
-		}
-		start = x;
-		x.setPrev(null);
 		size++;
+		if (isEmpty()){
+			end = x;
+			start=end;
+		} else {
+			x.setPrev(end);
+			end.setNext(x);
+			end = x;
+		}
 	}
 
 	/**
@@ -47,7 +52,7 @@ public class LinkedList {
 	 * 
 	 * @param cell
 	 */
-	public void listDelete(Cell cell) {
+	public void Delete(Cell cell) {
 		if (cell.getPrev() != null) {
 			(cell.getPrev()).setNext(cell.getNext());
 		} else {
@@ -60,17 +65,54 @@ public class LinkedList {
 	}
 
 	/**
-	 * method searches for data in the linked list.
+	 * Given a value, the method searches for the value in the linked list.
 	 * 
 	 * @param data
 	 * @return Cell x if its data is the same as the parameter's, null otherwise
 	 */
-	public Cell listSearch(int data) {
+	public Cell Search(int data) {
 		Cell x = start;
 		while ((x != null) && (x.getData() != data)) {
 			x = x.getNext();
 		}
 		return x;
+	}
+
+	/**
+	 * Given a place in the list, the method return the cell located in that
+	 * place in the list
+	 * 
+	 * @param i
+	 * @return if 1<=i<=list's size then return the i'th cell in the list.
+	 *         Otherwise, return null.
+	 */
+	public Cell getCell(int i) {
+		if ((i >= 1) && (i <= size)) {
+			Cell x = start;
+			for (int j = 1; j < i; j++) {
+				x = x.getNext();
+			}
+			return x;
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Swap between two list values according to their place in the list.
+	 * If one the indices is not in the proper range - method does nothing.
+	 * @param index1 - list "index" for first value
+	 * @param index2 - list "index" for second value
+	 */
+	public void swap(int index1, int index2) {
+		if ((index1 < 1) || (index1 > size) || (index2 < 1) || (index2 > size)){
+			return;
+		}
+		Cell cell1 = getCell(index1);
+		Cell cell2 = getCell(index2);
+		int temp = cell1.getData();
+		cell1.setData(cell2.getData());
+		cell2.setData(temp);
 	}
 
 	/**
@@ -87,32 +129,11 @@ public class LinkedList {
 	}
 
 	/**
-	 * @param i
-	 * @return if 1<=i<=list's size then return the i'th cell in the list.
-	 *         Otherwise, return null.
-	 */
-	public Cell getListItem(int i) {
-		if ((i >= 1) && (i <= size)) {
-			Cell x = start;
-			for (int j = 1; j < i; j++) {
-				x = x.getNext();
-			}
-			return x;
-		} else {
-			return null;
-		}
-	}
-
-	/**
 	 * a getter for list's size
 	 * 
 	 * @return this.size
 	 */
 	public int getSize() {
 		return size;
-	}
-
-	public Cell getStart() {
-		return start;
 	}
 }
