@@ -127,9 +127,22 @@ public class LinkedList {
 		}
 		Cell cell1 = getCell(index1);
 		Cell cell2 = getCell(index2);
-		int temp = cell1.getData();
-		cell1.setData(cell2.getData());
-		cell2.setData(temp);
+		Cell temp = new Cell(cell1.getData());
+		temp.setNext(cell1.getNext());
+		temp.setPrev(cell1.getPrev());
+		
+		//setting up next of the previous nodes for both cell1 and cell2 
+		cell1.getPrev().setNext(cell2);
+		cell2.getPrev().setNext(cell1);
+		//setting up next current nodes cell1, cell2
+		cell1.setNext(cell2.getNext());
+		cell2.setNext(temp.getNext());
+		cell1.setPrev(cell2.getPrev());
+		cell2.setPrev(temp.getPrev());
+		//setting up prev of the next nodes for both cell1 and cell2 
+		cell1.getNext().setPrev(cell1);
+		cell2.getNext().setPrev(cell2);
+	
 	}
 
 	/**
