@@ -54,16 +54,33 @@ public class LinkedList {
 	 */
 	public void Delete(Cell cell) {
 		if (cell.getPrev() != null) {
-			(cell.getPrev()).setNext(cell.getNext());
+			cell.getPrev().setNext(cell.getNext());
 		} else {
 			start = cell.getNext();
 		}
 		if (cell.getNext() != null) {
-			(cell.getNext()).setPrev(cell.getPrev());
+			cell.getNext().setPrev(cell.getPrev());
 		}
 		size--;
 	}
-
+	/**
+	 * Method returns the index number of the given cell in the LinkedList.
+	 * 
+	 * @param cell
+	 * @return If cell is in the LinkedList - returns its place in the list. Otherwise, 
+	 * if this cell isn't in the LinkedList - method returns -1.
+	 */
+	public int getCellIndex (Cell cell){
+		Cell x = start;
+		for (int i=1;i<=getSize();i++){
+			if (x==cell){
+				return i;
+			}
+			x = x.getNext();
+		}
+		return -1;
+		
+	}
 	/**
 	 * Given a value, the method searches for the value in the linked list.
 	 * 
