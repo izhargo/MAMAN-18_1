@@ -1,0 +1,17 @@
+/**
+	 * method inserts cell to the linked list at the start of the list
+	 * 
+	 * @param val
+	 */
+	public void InsertAtStart(int val) {
+		Cell x = new Cell(val);
+		size++;
+		if (isEmpty()) {
+			start = x;
+			end = start;
+		} else {
+			x.setNext(start);
+			start.setPrev(x);
+			start = x;
+		}
+	}

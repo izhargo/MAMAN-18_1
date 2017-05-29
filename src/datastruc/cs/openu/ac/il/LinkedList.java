@@ -1,8 +1,9 @@
 package datastruc.cs.openu.ac.il;
 
 /**
- * Class LinkedList is a simple implementation of a doubly linked list. Class
- * will ne used as a substance for the ListHeap data structure.
+ * Class LinkedList is a simple implementation of a doubly linked list. 
+ * Class will be used as list for clients with overdraft accounts and designed 
+ * specially to receive KeyClient as data.
  * 
  * @author Yizhar
  */
@@ -34,8 +35,8 @@ public class LinkedList {
 	 * 
 	 * @param val
 	 */
-	public void InsertAtEnd(int val) {
-		Cell x = new Cell(val);
+	public void InsertAtEnd(KeyClient Key) {
+		Cell x = new Cell(Key);
 		size++;
 		if (isEmpty()){
 			end = x;
@@ -63,92 +64,11 @@ public class LinkedList {
 		}
 		size--;
 	}
-	/**
-	 * Method returns the index number of the given cell in the LinkedList.
-	 * 
-	 * @param cell
-	 * @return If cell is in the LinkedList - returns its place in the list. Otherwise, 
-	 * if this cell isn't in the LinkedList - method returns -1.
-	 */
-	public int getCellIndex (Cell cell){
-		Cell x = start;
-		for (int i=1;i<=getSize();i++){
-			if (x==cell){
-				return i;
-			}
-			x = x.getNext();
-		}
-		return -1;
-		
-	}
-	/**
-	 * Given a value, the method searches for the value in the linked list.
-	 * 
-	 * @param data
-	 * @return Cell x if its data is the same as the parameter's, null otherwise
-	 */
-	public Cell Search(int data) {
-		Cell x = start;
-		while ((x != null) && (x.getData() != data)) {
-			x = x.getNext();
-		}
-		return x;
-	}
-
-	/**
-	 * Given a place in the list, the method return the cell located in that
-	 * place in the list
-	 * 
-	 * @param i
-	 * @return if 1<=i<=list's size then return the i'th cell in the list.
-	 *         Otherwise, return null.
-	 */
-	public Cell getCell(int i) {
-		if ((i >= 1) && (i <= size)) {
-			Cell x = start;
-			for (int j = 1; j < i; j++) {
-				x = x.getNext();
-			}
-			return x;
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * Swap between two list values according to their place in the list.
-	 * If one the indices is not in the proper range - method does nothing.
-	 * @param index1 - list "index" for first value
-	 * @param index2 - list "index" for second value
-	 */
-	public void swap(int index1, int index2) {
-		if ((index1 < 1) || (index1 > size) || (index2 < 1) || (index2 > size)){
-			return;
-		}
-		Cell cell1 = getCell(index1);
-		Cell cell2 = getCell(index2);
-		Cell temp = new Cell(cell1.getData());
-		temp.setNext(cell1.getNext());
-		temp.setPrev(cell1.getPrev());
-		
-		//setting up next of the previous nodes for both cell1 and cell2 
-		cell1.getPrev().setNext(cell2);
-		cell2.getPrev().setNext(cell1);
-		//setting up next current nodes cell1, cell2
-		cell1.setNext(cell2.getNext());
-		cell2.setNext(temp.getNext());
-		cell1.setPrev(cell2.getPrev());
-		cell2.setPrev(temp.getPrev());
-		//setting up prev of the next nodes for both cell1 and cell2 
-		cell1.getNext().setPrev(cell1);
-		cell2.getNext().setPrev(cell2);
 	
-	}
-
-	/**
-	 * Returns the list's values, from first to last as a String object.
-	 */
 	public String toString() {
+		if (size==0){
+			return "No Clients with a negative balance";
+		}
 		Cell x = start;
 		StringBuilder sb = new StringBuilder();
 		while (x != null) {
@@ -166,4 +86,9 @@ public class LinkedList {
 	public int getSize() {
 		return size;
 	}
+
+	public Cell getEnd() {
+		return end;
+	}
+	
 }
